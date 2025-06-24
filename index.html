@@ -3,109 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Лагерь – Мобильная Версия</title>
+  <title>Расписание лагеря</title>
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --font: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", "Helvetica Neue", sans-serif;
+      --bg: #f9f9f9;
+      --card-bg: #ffffff;
+      --text: #1c1c1e;
+      --muted: #8e8e93;
+      --border: #e5e5ea;
+      --radius: 20px;
     }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
-      padding: 1rem;
-      background-color: #f3f4f6;
+      padding: 0;
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: 15px;
     }
+
     .container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      padding: 1rem;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 32px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
     }
+
     h2 {
-      font-size: 1.2rem;
-      color: #374151;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
+      font-size: 22px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
     }
+
     .entry {
-      background: #f9fafb;
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      align-items: center;
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      font-weight: 500;
+      border: 1px solid var(--border);
     }
+
     .time {
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-    .desc {
+      color: var(--muted);
+      font-size: 13px;
       font-weight: 500;
-      margin-top: 4px;
+      width: 90px;
+      flex-shrink: 0;
     }
-    .badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      margin-top: 4px;
+
+    .grid {
+      display: grid;
+      grid-template-columns: 90px repeat(4, 1fr);
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 14px 20px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
     }
-    .sport { background-color: #d1fae5; color: #065f46; }
-    .craft { background-color: #ede9fe; color: #5b21b6; }
-    .trampoline { background-color: #e0f2fe; color: #0369a1; }
-    .quest { background-color: #fef3c7; color: #92400e; }
-    .squad-title {
+
+    .grid.header {
+      background: transparent;
       font-weight: 600;
-      margin-top: 0.5rem;
-      font-size: 0.95rem;
-      color: #4b5563;
+      font-size: 14px;
+      padding: 8px 20px;
+      color: var(--muted);
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      white-space: nowrap;
+    }
+
+    .sport {
+      background: #dcfce7;
+      color: #065f46;
+    }
+
+    .craft {
+      background: #f3e8ff;
+      color: #7c3aed;
+    }
+
+    .trampoline {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .quest {
+      background: #fef9c3;
+      color: #b45309;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .grid.header {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Общее расписание</h2>
-    <div class="entry"><div class="time">8:00–9:00</div><div class="desc">🧠 Планерка, молитва</div></div>
-    <div class="entry"><div class="time">9:00–9:10</div><div class="desc">🙏 Сбор, молитва</div></div>
-    <div class="entry"><div class="time">9:10–9:20</div><div class="desc">🤸 Зарядка</div></div>
-    <div class="entry"><div class="time">9:20–9:30</div><div class="desc">🍽️ Завтрак</div></div>
+    <div class="entry"><div class="time">8:00–9:00</div><div>🧠 Планерка, молитва</div></div>
+    <div class="entry"><div class="time">9:00–9:10</div><div>🙏 Сбор, молитва</div></div>
+    <div class="entry"><div class="time">9:10–9:20</div><div>🤸 Зарядка</div></div>
+    <div class="entry"><div class="time">9:20–9:30</div><div>🍽️ Завтрак</div></div>
 
     <h2>Факультативы</h2>
-    <div class="entry">
+
+    <div class="grid header">
+      <div>Время</div>
+      <div>Отряд 1</div>
+      <div>Отряд 2</div>
+      <div>Отряд 3</div>
+      <div>Отряд 4</div>
+    </div>
+
+    <div class="grid">
       <div class="time">9:30–10:30</div>
-      <div class="squad-title">Отряд 1</div><div class="badge sport">🏃 Спорт</div>
-      <div class="squad-title">Отряд 2</div><div class="badge craft">🎨 Поделки</div>
-      <div class="squad-title">Отряд 3</div><div class="badge trampoline">🤸 Батут</div>
-      <div class="squad-title">Отряд 4</div><div class="badge quest">🧝 Квест</div>
+      <div class="badge sport">🏃 Спорт</div>
+      <div class="badge craft">🎨 Поделки</div>
+      <div class="badge trampoline">🤸 Батут</div>
+      <div class="badge quest">🧝 Квест</div>
     </div>
-    <div class="entry">
+
+    <div class="grid">
       <div class="time">10:30–11:30</div>
-      <div class="squad-title">Отряд 1</div><div class="badge craft">🎨 Поделки</div>
-      <div class="squad-title">Отряд 2</div><div class="badge trampoline">🤸 Батут</div>
-      <div class="squad-title">Отряд 3</div><div class="badge quest">🧝 Квест</div>
-      <div class="squad-title">Отряд 4</div><div class="badge sport">🏃 Спорт</div>
+      <div class="badge craft">🎨 Поделки</div>
+      <div class="badge trampoline">🤸 Батут</div>
+      <div class="badge quest">🧝 Квест</div>
+      <div class="badge sport">🏃 Спорт</div>
     </div>
-    <div class="entry">
+
+    <div class="grid">
       <div class="time">11:30–12:30</div>
-      <div class="squad-title">Отряд 1</div><div class="badge trampoline">🤸 Батут</div>
-      <div class="squad-title">Отряд 2</div><div class="badge quest">🧝 Квест</div>
-      <div class="squad-title">Отряд 3</div><div class="badge sport">🏃 Спорт</div>
-      <div class="squad-title">Отряд 4</div><div class="badge craft">🎨 Поделки</div>
+      <div class="badge trampoline">🤸 Батут</div>
+      <div class="badge quest">🧝 Квест</div>
+      <div class="badge sport">🏃 Спорт</div>
+      <div class="badge craft">🎨 Поделки</div>
     </div>
-    <div class="entry">
+
+    <div class="grid">
       <div class="time">12:30–13:30</div>
-      <div class="squad-title">Отряд 1</div><div class="badge quest">🧝 Квест</div>
-      <div class="squad-title">Отряд 2</div><div class="badge sport">🏃 Спорт</div>
-      <div class="squad-title">Отряд 3</div><div class="badge craft">🎨 Поделки</div>
-      <div class="squad-title">Отряд 4</div><div class="badge trampoline">🤸 Батут</div>
+      <div class="badge quest">🧝 Квест</div>
+      <div class="badge sport">🏃 Спорт</div>
+      <div class="badge craft">🎨 Поделки</div>
+      <div class="badge trampoline">🤸 Батут</div>
     </div>
 
     <h2>Вечерняя программа</h2>
-    <div class="entry"><div class="time">15:30–16:30</div><div class="desc">🎮 Общелагерная игра</div></div>
-    <div class="entry"><div class="time">16:30–17:15</div><div class="desc">🎶 Музыкальный час</div></div>
-    <div class="entry"><div class="time">17:15–17:30</div><div class="desc">🍽️ Ужин</div></div>
-    <div class="entry"><div class="time">17:30–18:00</div><div class="desc">🕊️ Служение</div></div>
-    <div class="entry"><div class="time">18:00–19:00</div><div class="desc">🧹🙏 Планёрка, уборка, молитва</div></div>
+    <div class="entry"><div class="time">15:30–16:30</div><div>🎮 Общелагерная игра</div></div>
+    <div class="entry"><div class="time">16:30–17:15</div><div>🎶 Музыкальный час</div></div>
+    <div class="entry"><div class="time">17:15–17:30</div><div>🥪 Ужин</div></div>
+    <div class="entry"><div class="time">17:30–18:00</div><div>🕊️ Служение</div></div>
+    <div class="entry"><div class="time">18:00–19:00</div><div>🧹🙏 Планёрка, уборка, молитва</div></div>
   </div>
 </body>
 </html>
