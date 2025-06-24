@@ -25,7 +25,7 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 40px auto;
       padding: 32px;
       background: var(--card-bg);
@@ -64,33 +64,54 @@
       flex-shrink: 0;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 90px repeat(4, 1fr);
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 10px;
-      padding: 14px 20px;
-      background: var(--card-bg);
+    .table-wrapper {
+      overflow-x: auto;
       border-radius: var(--radius);
       border: 1px solid var(--border);
     }
 
-    .grid.header {
-      background: transparent;
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: center;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--bg);
       font-weight: 600;
-      font-size: 14px;
-      padding: 8px 20px;
       color: var(--muted);
-      border: none;
-      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    td {
+      font-weight: 500;
+    }
+
+    th:first-child,
+    td:first-child {
+      position: sticky;
+      left: 0;
+      background: var(--card-bg);
+      z-index: 1;
+      text-align: left;
+      color: var(--muted);
+      font-weight: 600;
+      width: 90px;
     }
 
     .badge {
       font-size: 14px;
       font-weight: 500;
       text-align: center;
-      padding: 10px 12px;
+      padding: 10px 14px;
       border-radius: 14px;
       white-space: nowrap;
     }
@@ -114,15 +135,6 @@
       background: #fef9c3;
       color: #b45309;
     }
-
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .grid.header {
-        display: none;
-      }
-    }
   </style>
 </head>
 <body>
@@ -134,45 +146,48 @@
     <div class="entry"><div class="time">9:20–9:30</div><div>🍽️ Завтрак</div></div>
 
     <h2>Факультативы</h2>
-
-    <div class="grid header">
-      <div>Время</div>
-      <div>Отряд 1</div>
-      <div>Отряд 2</div>
-      <div>Отряд 3</div>
-      <div>Отряд 4</div>
-    </div>
-
-    <div class="grid">
-      <div class="time">9:30–10:30</div>
-      <div class="badge sport">🏃 Спорт</div>
-      <div class="badge craft">🎨 Поделки</div>
-      <div class="badge trampoline">🤸 Батут</div>
-      <div class="badge quest">🧝 Квест</div>
-    </div>
-
-    <div class="grid">
-      <div class="time">10:30–11:30</div>
-      <div class="badge craft">🎨 Поделки</div>
-      <div class="badge trampoline">🤸 Батут</div>
-      <div class="badge quest">🧝 Квест</div>
-      <div class="badge sport">🏃 Спорт</div>
-    </div>
-
-    <div class="grid">
-      <div class="time">11:30–12:30</div>
-      <div class="badge trampoline">🤸 Батут</div>
-      <div class="badge quest">🧝 Квест</div>
-      <div class="badge sport">🏃 Спорт</div>
-      <div class="badge craft">🎨 Поделки</div>
-    </div>
-
-    <div class="grid">
-      <div class="time">12:30–13:30</div>
-      <div class="badge quest">🧝 Квест</div>
-      <div class="badge sport">🏃 Спорт</div>
-      <div class="badge craft">🎨 Поделки</div>
-      <div class="badge trampoline">🤸 Батут</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Время</th>
+            <th>Отряд 1</th>
+            <th>Отряд 2</th>
+            <th>Отряд 3</th>
+            <th>Отряд 4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9:30–10:30</td>
+            <td><span class="badge sport">🏃 Спорт</span></td>
+            <td><span class="badge craft">🎨 Поделки</span></td>
+            <td><span class="badge trampoline">🤸 Батут</span></td>
+            <td><span class="badge quest">🧝 Квест</span></td>
+          </tr>
+          <tr>
+            <td>10:30–11:30</td>
+            <td><span class="badge craft">🎨 Поделки</span></td>
+            <td><span class="badge trampoline">🤸 Батут</span></td>
+            <td><span class="badge quest">🧝 Квест</span></td>
+            <td><span class="badge sport">🏃 Спорт</span></td>
+          </tr>
+          <tr>
+            <td>11:30–12:30</td>
+            <td><span class="badge trampoline">🤸 Батут</span></td>
+            <td><span class="badge quest">🧝 Квест</span></td>
+            <td><span class="badge sport">🏃 Спорт</span></td>
+            <td><span class="badge craft">🎨 Поделки</span></td>
+          </tr>
+          <tr>
+            <td>12:30–13:30</td>
+            <td><span class="badge quest">🧝 Квест</span></td>
+            <td><span class="badge sport">🏃 Спорт</span></td>
+            <td><span class="badge craft">🎨 Поделки</span></td>
+            <td><span class="badge trampoline">🤸 Батут</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <h2>Вечерняя программа</h2>
