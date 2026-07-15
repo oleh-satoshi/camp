@@ -9,21 +9,27 @@
   <style>
     :root {
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI",
-        "Helvetica Neue", sans-serif;
-      --bg: #f9f9f9;
+        "Helvetica Neue", Arial, sans-serif;
+      --bg: #f4f5f7;
       --card-bg: #ffffff;
       --text: #1c1c1e;
-      --muted: #8e8e93;
-      --border: #e5e5ea;
+      --muted: #73737a;
+      --border: #e2e3e7;
       --radius: 20px;
-      --shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+      --blue: #007aff;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      min-height: 100%;
+    }
+
     body {
+      min-height: 100%;
       margin: 0;
       padding: 0;
       font-family: var(--font);
@@ -32,46 +38,64 @@
       font-size: 15px;
     }
 
-    .schedule {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 24px;
+    button {
+      font-family: inherit;
     }
 
-    .print-panel {
+    .schedule {
+      width: 100%;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 24px 40px;
+    }
+
+    .toolbar {
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
     }
 
     .print-button {
-      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 24px;
       border: none;
       border-radius: 14px;
-      padding: 13px 24px;
-      background: #007aff;
+      background-color: var(--blue);
       color: #ffffff;
-      font-family: inherit;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0, 122, 255, 0.22);
-      transition: transform 0.2s ease, background-color 0.2s ease;
+      box-shadow: 0 8px 18px rgba(0, 122, 255, 0.22);
+      transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .print-button:hover {
-      background: #006ee6;
+      background-color: #006ee6;
       transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 122, 255, 0.27);
     }
 
     .print-button:active {
       transform: translateY(0);
     }
 
+    .print-button:focus-visible {
+      outline: 3px solid rgba(0, 122, 255, 0.25);
+      outline-offset: 4px;
+    }
+
     .schedule-content {
-      background: var(--card-bg);
-      border-radius: var(--radius);
+      width: 100%;
       padding: 32px;
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
@@ -79,44 +103,49 @@
       margin: 0 0 28px;
       text-align: center;
       font-size: 28px;
+      line-height: 1.2;
       font-weight: 750;
     }
 
     h2 {
-      font-size: 22px;
-      margin-top: 32px;
-      margin-bottom: 16px;
-      font-weight: 700;
-      color: var(--text);
+      margin: 32px 0 16px;
+      padding-bottom: 7px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 6px;
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 700;
     }
 
     .entry {
       display: flex;
-      justify-content: flex-start;
-      gap: 20px;
       align-items: center;
-      padding: 14px 20px;
+      gap: 20px;
+      min-height: 52px;
       margin-bottom: 10px;
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      font-weight: 500;
+      padding: 14px 20px;
       border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background-color: var(--card-bg);
+      font-weight: 500;
+    }
+
+    .entry.after-electives {
+      margin-top: 32px;
     }
 
     .time {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 500;
       width: 90px;
       flex-shrink: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
     }
 
     .table-wrapper {
+      width: 100%;
       overflow-x: auto;
-      border-radius: var(--radius);
       border: 1px solid var(--border);
+      border-radius: var(--radius);
     }
 
     table {
@@ -128,78 +157,87 @@
 
     th,
     td {
-      padding: 14px 20px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
       text-align: center;
       white-space: nowrap;
-      border-bottom: 1px solid var(--border);
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none;
     }
 
     th {
-      background: var(--bg);
-      font-weight: 600;
+      background-color: var(--bg);
       color: var(--muted);
       font-size: 14px;
+      font-weight: 700;
     }
 
     td {
       font-weight: 500;
     }
 
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
     th:first-child,
     td:first-child {
       position: sticky;
       left: 0;
-      background: var(--card-bg);
       z-index: 1;
-      text-align: left;
+      width: 110px;
+      background-color: var(--card-bg);
       color: var(--muted);
-      font-weight: 600;
-      width: 90px;
+      font-weight: 700;
+      text-align: left;
     }
 
     thead th:first-child {
-      background: var(--bg);
       z-index: 2;
+      background-color: var(--bg);
     }
 
     .badge {
       display: inline-block;
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
+      min-width: 92px;
       padding: 10px 14px;
       border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
       white-space: nowrap;
     }
 
     .sport {
-      background: #dcfce7;
+      background-color: #dcfce7;
       color: #065f46;
     }
 
     .craft {
-      background: #f3e8ff;
+      background-color: #f3e8ff;
       color: #7c3aed;
     }
 
     .trampoline {
-      background: #dbeafe;
+      background-color: #dbeafe;
       color: #1d4ed8;
     }
 
     .quest {
-      background: #fef9c3;
-      color: #b45309;
+      background-color: #fef9c3;
+      color: #a44b08;
     }
 
-    @media (max-width: 600px) {
+    .print-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
       .schedule {
         margin: 20px auto;
-        padding: 0 12px;
+        padding: 0 12px 30px;
       }
 
       .schedule-content {
@@ -208,6 +246,10 @@
 
       h1 {
         font-size: 24px;
+      }
+
+      h2 {
+        font-size: 19px;
       }
 
       .entry {
@@ -220,31 +262,30 @@
       }
     }
 
-    /* Настройки печати */
-
     @page {
       size: A4 portrait;
-      margin: 7mm;
+      margin: 6mm;
     }
 
     @media print {
       html,
       body {
         width: 210mm;
-        min-height: 297mm;
+        height: auto;
         margin: 0;
         padding: 0;
         background: #ffffff;
       }
 
       body {
-        font-size: 9px;
         color: #000000;
+        font-size: 8.5pt;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
-      .print-panel {
+      .toolbar,
+      .print-note {
         display: none !important;
       }
 
@@ -257,46 +298,49 @@
 
       .schedule-content {
         width: 100%;
-        padding: 4mm 5mm;
+        margin: 0;
+        padding: 2mm 3mm;
         border-radius: 0;
         box-shadow: none;
-        background: #ffffff;
       }
 
       h1 {
-        margin: 0 0 3mm;
-        font-size: 17px;
+        margin: 0 0 2.5mm;
+        font-size: 15pt;
         line-height: 1.1;
       }
 
       h2 {
-        margin: 3mm 0 2mm;
-        padding-bottom: 1mm;
-        font-size: 13px;
+        margin: 2.5mm 0 1.5mm;
+        padding-bottom: 0.8mm;
+        font-size: 10.5pt;
         line-height: 1.1;
       }
 
       .entry {
         min-height: 0;
-        gap: 3mm;
-        margin-bottom: 1.2mm;
-        padding: 1.5mm 3mm;
-        border-radius: 4mm;
-        font-size: 9px;
-        line-height: 1.15;
+        margin-bottom: 1mm;
+        padding: 1.2mm 2.2mm;
+        gap: 2.5mm;
+        border-radius: 3mm;
+        font-size: 8pt;
+        line-height: 1.1;
         break-inside: avoid;
         page-break-inside: avoid;
       }
 
+      .entry.after-electives {
+        margin-top: 2.5mm;
+      }
+
       .time {
-        width: 22mm;
-        font-size: 8px;
+        width: 21mm;
+        font-size: 7.5pt;
       }
 
       .table-wrapper {
-        width: 100%;
         overflow: visible;
-        border-radius: 3mm;
+        border-radius: 2.5mm;
         break-inside: avoid;
         page-break-inside: avoid;
       }
@@ -310,43 +354,37 @@
 
       th,
       td {
-        padding: 1.5mm 1mm;
-        font-size: 8px;
-        line-height: 1.1;
+        padding: 1.15mm 0.8mm;
+        border: 0.2mm solid #dddddd;
+        font-size: 7pt;
+        line-height: 1.05;
         white-space: normal;
-        word-break: normal;
-        overflow-wrap: anywhere;
-        border: 1px solid var(--border);
+        overflow-wrap: break-word;
+      }
+
+      th {
+        font-size: 6.8pt;
       }
 
       th:first-child,
       td:first-child {
         position: static;
         width: 24mm;
+        background-color: #ffffff;
         text-align: center;
-        background: #ffffff;
       }
 
       thead th:first-child {
-        background: #f9f9f9;
-      }
-
-      th {
-        background: #f9f9f9;
-        font-size: 7.5px;
+        background-color: #f4f5f7;
       }
 
       .badge {
+        min-width: 0;
         width: 100%;
-        padding: 1.5mm 1mm;
-        border-radius: 3mm;
-        font-size: 8px;
-        line-height: 1.1;
-        white-space: nowrap;
-      }
-
-      .after-electives {
-        margin-top: 3mm !important;
+        padding: 1.1mm 0.5mm;
+        border-radius: 2.5mm;
+        font-size: 7pt;
+        line-height: 1.05;
       }
     }
   </style>
@@ -354,17 +392,20 @@
 
 <body>
   <main class="schedule">
-    <div class="print-panel">
+
+    <div class="toolbar">
       <button
         class="print-button"
+        id="printButton"
         type="button"
-        onclick="window.print()"
+        aria-label="Распечатать расписание в формате A4"
       >
         🖨️ Распечатать A4
       </button>
     </div>
 
-    <div class="schedule-content">
+    <div class="schedule-content" id="printArea">
+
       <h1>📅 Расписание лагеря</h1>
 
       <div class="entry">
@@ -539,6 +580,40 @@
         </table>
       </div>
     </div>
+
+    <p class="print-note">
+      При печати выберите формат бумаги A4 и включите печать фоновой
+      графики, чтобы сохранить цветные блоки.
+    </p>
   </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const printButton = document.getElementById("printButton");
+
+      if (!printButton) {
+        console.error("Кнопка печати не найдена.");
+        return;
+      }
+
+      printButton.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        try {
+          window.focus();
+
+          setTimeout(function () {
+            window.print();
+          }, 100);
+        } catch (error) {
+          console.error("Не удалось открыть окно печати:", error);
+
+          alert(
+            "Браузер заблокировал окно печати. Нажмите Ctrl+P на Windows или Command+P на Mac."
+          );
+        }
+      });
+    });
+  </script>
 </body>
 </html>
