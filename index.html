@@ -8,8 +8,7 @@
 
   <style>
     :root {
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI",
-        "Helvetica Neue", Arial, sans-serif;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       --bg: #f4f5f7;
       --card-bg: #ffffff;
       --text: #1c1c1e;
@@ -18,20 +17,22 @@
       --radius: 20px;
       --shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
       --blue: #007aff;
+      --blue-dark: #006ee6;
+      --warning-bg: #fff7d6;
+      --warning-text: #7a5a00;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      min-height: 100%;
-    }
-
+    html,
     body {
       min-height: 100%;
       margin: 0;
-      padding: 0;
+    }
+
+    body {
       font-family: var(--font);
       background-color: var(--bg);
       color: var(--text);
@@ -51,17 +52,19 @@
 
     .toolbar {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
-    .print-button {
+    .action-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       min-height: 48px;
-      padding: 12px 24px;
+      padding: 12px 22px;
       border: none;
       border-radius: 14px;
       background-color: var(--blue);
@@ -70,25 +73,29 @@
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 8px 18px rgba(0, 122, 255, 0.22);
-      transition:
-        transform 0.2s ease,
-        background-color 0.2s ease,
-        box-shadow 0.2s ease;
+      transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
-    .print-button:hover {
-      background-color: #006ee6;
+    .action-button:hover {
+      background-color: var(--blue-dark);
       transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(0, 122, 255, 0.27);
     }
 
-    .print-button:active {
+    .action-button:active {
       transform: translateY(0);
     }
 
-    .print-button:focus-visible {
-      outline: 3px solid rgba(0, 122, 255, 0.25);
-      outline-offset: 4px;
+    .telegram-note {
+      margin: 0 auto 20px;
+      max-width: 760px;
+      padding: 14px 18px;
+      border: 1px solid #f0d98a;
+      border-radius: 14px;
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
     }
 
     .schedule-content {
@@ -226,14 +233,6 @@
       color: #a44b08;
     }
 
-    .print-note {
-      margin: 14px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-      text-align: center;
-    }
-
     @media (max-width: 700px) {
       .schedule {
         margin: 20px auto;
@@ -271,7 +270,6 @@
       html,
       body {
         width: 210mm;
-        height: auto;
         margin: 0;
         padding: 0;
         background: #ffffff;
@@ -285,7 +283,7 @@
       }
 
       .toolbar,
-      .print-note {
+      .telegram-note {
         display: none !important;
       }
 
@@ -392,41 +390,25 @@
 
 <body>
   <main class="schedule">
-
     <div class="toolbar">
-      <button
-        class="print-button"
-        id="printButton"
-        type="button"
-        aria-label="Распечатать расписание в формате A4"
-      >
+      <button class="action-button" id="printButton" type="button">
         🖨️ Распечатать A4
       </button>
     </div>
 
-    <div class="schedule-content" id="printArea">
+    <div class="telegram-note" id="telegramNote">
+      Если страница открыта внутри Telegram, кнопка печати может не сработать.
+      Нажмите меню Telegram и выберите «Открыть в Safari» или «Открыть в Chrome»,
+      затем снова нажмите «Распечатать A4».
+    </div>
 
+    <div class="schedule-content">
       <h1>📅 Расписание лагеря</h1>
 
-      <div class="entry">
-        <div class="time">8:00–9:00</div>
-        <div>🧠 Планерка, молитва</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">9:00–9:10</div>
-        <div>🙏 Сбор, молитва</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">9:10–9:20</div>
-        <div>🤸 Зарядка</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">9:20–9:30</div>
-        <div>🍽️ Завтрак</div>
-      </div>
+      <div class="entry"><div class="time">8:00–9:00</div><div>🧠 Планерка, молитва</div></div>
+      <div class="entry"><div class="time">9:00–9:10</div><div>🙏 Сбор, молитва</div></div>
+      <div class="entry"><div class="time">9:10–9:20</div><div>🤸 Зарядка</div></div>
+      <div class="entry"><div class="time">9:20–9:30</div><div>🍽️ Завтрак</div></div>
 
       <h2>Факультативы</h2>
 
@@ -441,104 +423,45 @@
               <th>Отряд Олега</th>
             </tr>
           </thead>
-
           <tbody>
             <tr>
               <td>9:30–10:15</td>
-              <td>
-                <span class="badge sport">🏃 Спорт</span>
-              </td>
-              <td>
-                <span class="badge craft">🎨 Поделки</span>
-              </td>
-              <td>
-                <span class="badge trampoline">🤸 Батут</span>
-              </td>
-              <td>
-                <span class="badge quest">🧝 Квест</span>
-              </td>
+              <td><span class="badge sport">🏃 Спорт</span></td>
+              <td><span class="badge craft">🎨 Поделки</span></td>
+              <td><span class="badge trampoline">🤸 Батут</span></td>
+              <td><span class="badge quest">🧝 Квест</span></td>
             </tr>
-
             <tr>
               <td>10:15–11:00</td>
-              <td>
-                <span class="badge craft">🎨 Поделки</span>
-              </td>
-              <td>
-                <span class="badge trampoline">🤸 Батут</span>
-              </td>
-              <td>
-                <span class="badge quest">🧝 Квест</span>
-              </td>
-              <td>
-                <span class="badge sport">🏃 Спорт</span>
-              </td>
+              <td><span class="badge craft">🎨 Поделки</span></td>
+              <td><span class="badge trampoline">🤸 Батут</span></td>
+              <td><span class="badge quest">🧝 Квест</span></td>
+              <td><span class="badge sport">🏃 Спорт</span></td>
             </tr>
-
             <tr>
               <td>11:00–11:45</td>
-              <td>
-                <span class="badge trampoline">🤸 Батут</span>
-              </td>
-              <td>
-                <span class="badge quest">🧝 Квест</span>
-              </td>
-              <td>
-                <span class="badge sport">🏃 Спорт</span>
-              </td>
-              <td>
-                <span class="badge craft">🎨 Поделки</span>
-              </td>
+              <td><span class="badge trampoline">🤸 Батут</span></td>
+              <td><span class="badge quest">🧝 Квест</span></td>
+              <td><span class="badge sport">🏃 Спорт</span></td>
+              <td><span class="badge craft">🎨 Поделки</span></td>
             </tr>
-
             <tr>
               <td>11:45–12:30</td>
-              <td>
-                <span class="badge quest">🧝 Квест</span>
-              </td>
-              <td>
-                <span class="badge sport">🏃 Спорт</span>
-              </td>
-              <td>
-                <span class="badge craft">🎨 Поделки</span>
-              </td>
-              <td>
-                <span class="badge trampoline">🤸 Батут</span>
-              </td>
+              <td><span class="badge quest">🧝 Квест</span></td>
+              <td><span class="badge sport">🏃 Спорт</span></td>
+              <td><span class="badge craft">🎨 Поделки</span></td>
+              <td><span class="badge trampoline">🤸 Батут</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="entry after-electives">
-        <div class="time">12:30–13:30</div>
-        <div>🍽️ Обед</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">13:30–14:30</div>
-        <div>📖 Библейский час</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">14:30–15:00</div>
-        <div>🎶 Музыкальный час</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">15:00–16:00</div>
-        <div>🎮 Общелагерная игра</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">16:00–16:30</div>
-        <div>🥪 Ужин</div>
-      </div>
-
-      <div class="entry">
-        <div class="time">16:30–17:00</div>
-        <div>🕊️ Служение</div>
-      </div>
+      <div class="entry after-electives"><div class="time">12:30–13:30</div><div>🍽️ Обед</div></div>
+      <div class="entry"><div class="time">13:30–14:30</div><div>📖 Библейский час</div></div>
+      <div class="entry"><div class="time">14:30–15:00</div><div>🎶 Музыкальный час</div></div>
+      <div class="entry"><div class="time">15:00–16:00</div><div>🎮 Общелагерная игра</div></div>
+      <div class="entry"><div class="time">16:00–16:30</div><div>🥪 Ужин</div></div>
+      <div class="entry"><div class="time">16:30–17:00</div><div>🕊️ Служение</div></div>
 
       <h2>График сценок во время служения</h2>
 
@@ -551,69 +474,44 @@
               <th>Тема</th>
             </tr>
           </thead>
-
           <tbody>
-            <tr>
-              <td>Среда</td>
-              <td>Отряд Иры</td>
-              <td>Смелость</td>
-            </tr>
-
-            <tr>
-              <td>Четверг</td>
-              <td>Отряд Марийки</td>
-              <td>Честность</td>
-            </tr>
-
-            <tr>
-              <td>Пятница</td>
-              <td>Отряд Олега</td>
-              <td>Доброта</td>
-            </tr>
-
-            <tr>
-              <td>Суббота</td>
-              <td>Отряд Лизы</td>
-              <td>Спасение</td>
-            </tr>
+            <tr><td>Среда</td><td>Отряд Иры</td><td>Смелость</td></tr>
+            <tr><td>Четверг</td><td>Отряд Марийки</td><td>Честность</td></tr>
+            <tr><td>Пятница</td><td>Отряд Олега</td><td>Доброта</td></tr>
+            <tr><td>Суббота</td><td>Отряд Лизы</td><td>Спасение</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-
-    <p class="print-note">
-      При печати выберите формат бумаги A4 и включите печать фоновой
-      графики, чтобы сохранить цветные блоки.
-    </p>
   </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    (function () {
       const printButton = document.getElementById("printButton");
 
-      if (!printButton) {
-        console.error("Кнопка печати не найдена.");
-        return;
+      function isTelegramBrowser() {
+        const ua = navigator.userAgent || "";
+        return /Telegram/i.test(ua);
       }
 
-      printButton.addEventListener("click", function (event) {
-        event.preventDefault();
+      printButton.addEventListener("click", function () {
+        if (isTelegramBrowser()) {
+          alert(
+            "Telegram может блокировать печать. Откройте меню страницы и выберите «Открыть в Safari» или «Открыть в Chrome», затем нажмите кнопку печати ещё раз."
+          );
+          return;
+        }
 
         try {
           window.focus();
-
-          setTimeout(function () {
-            window.print();
-          }, 100);
+          window.print();
         } catch (error) {
-          console.error("Не удалось открыть окно печати:", error);
-
           alert(
-            "Браузер заблокировал окно печати. Нажмите Ctrl+P на Windows или Command+P на Mac."
+            "Не удалось открыть меню печати. Используйте Command + P на Mac или Ctrl + P на Windows."
           );
         }
       });
-    });
+    })();
   </script>
 </body>
 </html>
