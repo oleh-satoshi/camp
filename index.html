@@ -2,11 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Лагерь — Расписание и Финансы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Лагерь — Расписание</title>
+
   <style>
     :root {
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Helvetica Neue", sans-serif;
       --bg: #f9f9f9;
       --card-bg: #ffffff;
       --text: #1c1c1e;
@@ -25,46 +28,24 @@
       font-size: 15px;
     }
 
-    .tabs {
+    .schedule {
       max-width: 1000px;
       margin: 40px auto;
       padding: 0 24px;
     }
 
-    .tab-buttons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 24px;
-      gap: 12px;
-    }
-
-    .tab-button {
-      padding: 12px 24px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--muted);
-      transition: all 0.3s ease;
-    }
-
-    .tab-button.active {
-      background-color: #007aff;
-      color: white;
-      border-color: #007aff;
-    }
-
-    .tab-content {
-      display: none;
+    .schedule-content {
       background: var(--card-bg);
       border-radius: var(--radius);
       padding: 32px;
       box-shadow: var(--shadow);
     }
 
-    .tab-content.active {
-      display: block;
+    h1 {
+      margin: 0 0 28px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 750;
     }
 
     h2 {
@@ -111,11 +92,16 @@
       border-spacing: 0;
     }
 
-    th, td {
+    th,
+    td {
       padding: 14px 20px;
       text-align: center;
       white-space: nowrap;
       border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
     }
 
     th {
@@ -141,7 +127,13 @@
       width: 90px;
     }
 
+    thead th:first-child {
+      background: var(--bg);
+      z-index: 2;
+    }
+
     .badge {
+      display: inline-block;
       font-size: 14px;
       font-weight: 500;
       text-align: center;
@@ -170,157 +162,209 @@
       color: #b45309;
     }
 
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow);
-    }
+    @media (max-width: 600px) {
+      .schedule {
+        margin: 20px auto;
+        padding: 0 12px;
+      }
 
-    .card h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
+      .schedule-content {
+        padding: 20px 14px;
+      }
 
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      background: #dbeafe;
-      border-radius: 999px;
-      font-size: 13px;
-      color: #1e3a8a;
-      margin-bottom: 16px;
-    }
+      h1 {
+        font-size: 24px;
+      }
 
-    ul {
-      padding-left: 20px;
-    }
+      .entry {
+        gap: 12px;
+        padding: 12px 14px;
+      }
 
-    li {
-      margin-bottom: 8px;
+      .time {
+        width: 82px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="tabs">
-    <div class="tab-buttons">
-      <button class="tab-button active" onclick="showTab(0)">📅 Расписание</button>
-      <button class="tab-button" onclick="showTab(1)">💰 Финансовая система</button>
-    </div>
+  <main class="schedule">
+    <div class="schedule-content">
+      <h1>📅 Расписание лагеря</h1>
 
-    <div class="tab-content active">
-      <div class="entry"><div class="time">8:00–9:00</div><div>🧠 Планерка, молитва</div></div>
-      <div class="entry"><div class="time">9:00–9:10</div><div>🙏 Сбор, молитва</div></div>
-      <div class="entry"><div class="time">9:10–9:20</div><div>🤸 Зарядка</div></div>
-      <div class="entry"><div class="time">9:20–9:30</div><div>🍽️ Завтрак</div></div>
+      <div class="entry">
+        <div class="time">8:00–9:00</div>
+        <div>🧠 Планерка, молитва</div>
+      </div>
 
-      
+      <div class="entry">
+        <div class="time">9:00–9:10</div>
+        <div>🙏 Сбор, молитва</div>
+      </div>
 
-       <h2>Факультативы</h2>
-<div class="table-wrapper">
-  <table>
-    <thead>
-      <tr><th>Время</th><th>Отряд 1</th><th>Отряд 2</th><th>Отряд 3</th><th>Отряд 4</th></tr>
-    </thead>
-    <tbody>
-  <tr><td>9:30–10:15</td><td><span class="badge sport">🏃 Спорт</span></td><td><span class="badge craft">🎨 Поделки</span></td><td><span class="badge trampoline">🤸 Батут</span></td><td><span class="badge quest">🧝 Квест</span></td></tr>
-  <tr><td>10:15–11:00</td><td><span class="badge craft">🎨 Поделки</span></td><td><span class="badge trampoline">🤸 Батут</span></td><td><span class="badge quest">🧝 Квест</span></td><td><span class="badge sport">🏃 Спорт</span></td></tr>
-  <tr><td>11:00–11:45</td><td><span class="badge trampoline">🤸 Батут</span></td><td><span class="badge quest">🧝 Квест</span></td><td><span class="badge sport">🏃 Спорт</span></td><td><span class="badge craft">🎨 Поделки</span></td></tr>
-  <tr><td>11:45–12:30</td><td><span class="badge quest">🧝 Квест</span></td><td><span class="badge sport">🏃 Спорт</span></td><td><span class="badge craft">🎨 Поделки</span></td><td><span class="badge trampoline">🤸 Батут</span></td></tr>
-</tbody>
-  </table>
-</div>
+      <div class="entry">
+        <div class="time">9:10–9:20</div>
+        <div>🤸 Зарядка</div>
+      </div>
 
-<div class="entry" style="margin-top: 32px;"><div class="time">12:30–13:30</div><div>🍽️ Обед</div></div>
-<div class="entry"><div class="time">13:30–14:30</div><div>📖 Библейский час</div></div>
-<div class="entry"><div class="time">14:30–15:00</div><div>🎶 Музыкальный час</div></div>
-<div class="entry"><div class="time">15:00–16:00</div><div>🎮 Общелагерная игра</div></div>
-<div class="entry"><div class="time">16:00–16:30</div><div>🥪 Ужин</div></div>
-<div class="entry"><div class="time">16:30–17:00</div><div>🕊️ Служение</div></div>
+      <div class="entry">
+        <div class="time">9:20–9:30</div>
+        <div>🍽️ Завтрак</div>
+      </div>
 
-      <h2>График сценок во время служения</h2>
+      <h2>Факультативы</h2>
+
       <div class="table-wrapper">
         <table>
-          <thead><tr><th>День</th><th>Отряд</th><th>Тема</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Время</th>
+              <th>Отряд Марийки</th>
+              <th>Отряд Лизы</th>
+              <th>Отряд Иры</th>
+              <th>Отряд Олега</th>
+            </tr>
+          </thead>
+
           <tbody>
-            <tr><td>✅ Среда</td><td>Отряд Инессы</td><td>Смелость</td></tr>
-            <tr><td>✅ Четверг</td><td>Отряд Иры</td><td>Честность</td></tr>
-            <tr><td>Пятница</td><td>Отряд Лизы</td><td>Доброта</td></tr>
-            <tr><td>Суббота</td><td>Отряд Олега</td><td>Спасение</td></tr>
+            <tr>
+              <td>9:30–10:15</td>
+              <td>
+                <span class="badge sport">🏃 Спорт</span>
+              </td>
+              <td>
+                <span class="badge craft">🎨 Поделки</span>
+              </td>
+              <td>
+                <span class="badge trampoline">🤸 Батут</span>
+              </td>
+              <td>
+                <span class="badge quest">🧝 Квест</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>10:15–11:00</td>
+              <td>
+                <span class="badge craft">🎨 Поделки</span>
+              </td>
+              <td>
+                <span class="badge trampoline">🤸 Батут</span>
+              </td>
+              <td>
+                <span class="badge quest">🧝 Квест</span>
+              </td>
+              <td>
+                <span class="badge sport">🏃 Спорт</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>11:00–11:45</td>
+              <td>
+                <span class="badge trampoline">🤸 Батут</span>
+              </td>
+              <td>
+                <span class="badge quest">🧝 Квест</span>
+              </td>
+              <td>
+                <span class="badge sport">🏃 Спорт</span>
+              </td>
+              <td>
+                <span class="badge craft">🎨 Поделки</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>11:45–12:30</td>
+              <td>
+                <span class="badge quest">🧝 Квест</span>
+              </td>
+              <td>
+                <span class="badge sport">🏃 Спорт</span>
+              </td>
+              <td>
+                <span class="badge craft">🎨 Поделки</span>
+              </td>
+              <td>
+                <span class="badge trampoline">🤸 Батут</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="entry" style="margin-top: 32px">
+        <div class="time">12:30–13:30</div>
+        <div>🍽️ Обед</div>
+      </div>
+
+      <div class="entry">
+        <div class="time">13:30–14:30</div>
+        <div>📖 Библейский час</div>
+      </div>
+
+      <div class="entry">
+        <div class="time">14:30–15:00</div>
+        <div>🎶 Музыкальный час</div>
+      </div>
+
+      <div class="entry">
+        <div class="time">15:00–16:00</div>
+        <div>🎮 Общелагерная игра</div>
+      </div>
+
+      <div class="entry">
+        <div class="time">16:00–16:30</div>
+        <div>🥪 Ужин</div>
+      </div>
+
+      <div class="entry">
+        <div class="time">16:30–17:00</div>
+        <div>🕊️ Служение</div>
+      </div>
+
+      <h2>График сценок во время служения</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>День</th>
+              <th>Отряд</th>
+              <th>Тема</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>✅ Среда</td>
+              <td>Отряд Иры</td>
+              <td>Смелость</td>
+            </tr>
+
+            <tr>
+              <td>✅ Четверг</td>
+              <td>Отряд Марийки</td>
+              <td>Честность</td>
+            </tr>
+
+            <tr>
+              <td>Пятница</td>
+              <td>Отряд Олега</td>
+              <td>Доброта</td>
+            </tr>
+
+            <tr>
+              <td>Суббота</td>
+              <td>Отряд Лизы</td>
+              <td>Спасение</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
-
-    <div class="tab-content">
-      <div class="card">
-        <div class="tag">📘 Цель системы</div>
-        <p>К концу лагеря у каждого ребёнка должно быть <strong>$500</strong>. Деньги выдаются каждый день как зарплата и начисляются за хорошие поступки.</p>
-      </div>
-
-      <div class="card">
-        <div class="tag">📌 Основные правила</div>
-        <ul>
-          <li>Всего в экономике лагеря: <strong>$20,000</strong></li>
-          <li>Всего детей: <strong>40</strong> (4 группы по 10)</li>
-          <li>Каждый день дети получают <strong>зарплату</strong> в конверте</li>
-          <li>Наставник утром подготавливает <strong>именные конверты</strong> с зарплатой</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="tag">💵 Фиксированная зарплата</div>
-        <ul>
-          <li>День 1: $50</li>
-          <li>День 2: $60</li>
-          <li>День 3: $70</li>
-          <li>День 4: $80</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="tag">🌟 Баллы за поступки</div>
-        <p>Наставник <strong>в течение дня записывает</strong> добрые поступки. В последний день баллы <strong>конвертируются в деньги</strong>.</p>
-      </div>
-
-      <div class="card">
-        <div class="tag">🍽️ Выдача зарплаты</div>
-        <ul>
-          <li>Вручение — во время ужина</li>
-          <li>Ребёнок сам перекладывает деньги в основной конверт</li>
-          <li>Финальные конверты вручаются в последний день</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="tag">🧑‍🏫 Ответственность наставника</div>
-        <ul>
-          <li>Подготовить 10 конвертов с зарплатой</li>
-          <li>Подписать имена</li>
-          <li>Фиксировать хорошие поступки</li>
-        </ul>
-      </div>
-      <div class="card">
-  <div class="tag">🎁 Цены и категории призов</div>
-  <ul>
-    <li>💸 Дешевые: $20–$50 </li>
-    <li>💵 Средние: $60–$120 </li>
-    <li>💎 Дорогие: $150–$250 </li>
-  </ul>
-</div>
-    </div>
-  </div>
-
-  <script>
-    function showTab(index) {
-      const buttons = document.querySelectorAll('.tab-button');
-      const contents = document.querySelectorAll('.tab-content');
-      buttons.forEach((btn, i) => {
-        btn.classList.toggle('active', i === index);
-        contents[i].classList.toggle('active', i === index);
-      });
-    }
-  </script>
+  </main>
 </body>
 </html>
