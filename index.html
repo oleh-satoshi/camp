@@ -19,6 +19,10 @@
       --shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -32,6 +36,36 @@
       max-width: 1000px;
       margin: 40px auto;
       padding: 0 24px;
+    }
+
+    .print-panel {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .print-button {
+      appearance: none;
+      border: none;
+      border-radius: 14px;
+      padding: 13px 24px;
+      background: #007aff;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 122, 255, 0.22);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .print-button:hover {
+      background: #006ee6;
+      transform: translateY(-1px);
+    }
+
+    .print-button:active {
+      transform: translateY(0);
     }
 
     .schedule-content {
@@ -185,11 +219,151 @@
         width: 82px;
       }
     }
+
+    /* Настройки печати */
+
+    @page {
+      size: A4 portrait;
+      margin: 7mm;
+    }
+
+    @media print {
+      html,
+      body {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+      }
+
+      body {
+        font-size: 9px;
+        color: #000000;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .print-panel {
+        display: none !important;
+      }
+
+      .schedule {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .schedule-content {
+        width: 100%;
+        padding: 4mm 5mm;
+        border-radius: 0;
+        box-shadow: none;
+        background: #ffffff;
+      }
+
+      h1 {
+        margin: 0 0 3mm;
+        font-size: 17px;
+        line-height: 1.1;
+      }
+
+      h2 {
+        margin: 3mm 0 2mm;
+        padding-bottom: 1mm;
+        font-size: 13px;
+        line-height: 1.1;
+      }
+
+      .entry {
+        min-height: 0;
+        gap: 3mm;
+        margin-bottom: 1.2mm;
+        padding: 1.5mm 3mm;
+        border-radius: 4mm;
+        font-size: 9px;
+        line-height: 1.15;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .time {
+        width: 22mm;
+        font-size: 8px;
+      }
+
+      .table-wrapper {
+        width: 100%;
+        overflow: visible;
+        border-radius: 3mm;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 1.5mm 1mm;
+        font-size: 8px;
+        line-height: 1.1;
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: anywhere;
+        border: 1px solid var(--border);
+      }
+
+      th:first-child,
+      td:first-child {
+        position: static;
+        width: 24mm;
+        text-align: center;
+        background: #ffffff;
+      }
+
+      thead th:first-child {
+        background: #f9f9f9;
+      }
+
+      th {
+        background: #f9f9f9;
+        font-size: 7.5px;
+      }
+
+      .badge {
+        width: 100%;
+        padding: 1.5mm 1mm;
+        border-radius: 3mm;
+        font-size: 8px;
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+
+      .after-electives {
+        margin-top: 3mm !important;
+      }
+    }
   </style>
 </head>
 
 <body>
   <main class="schedule">
+    <div class="print-panel">
+      <button
+        class="print-button"
+        type="button"
+        onclick="window.print()"
+      >
+        🖨️ Распечатать A4
+      </button>
+    </div>
+
     <div class="schedule-content">
       <h1>📅 Расписание лагеря</h1>
 
@@ -295,7 +469,7 @@
         </table>
       </div>
 
-      <div class="entry" style="margin-top: 32px">
+      <div class="entry after-electives">
         <div class="time">12:30–13:30</div>
         <div>🍽️ Обед</div>
       </div>
@@ -339,13 +513,13 @@
 
           <tbody>
             <tr>
-              <td>✅ Среда</td>
+              <td>Среда</td>
               <td>Отряд Иры</td>
               <td>Смелость</td>
             </tr>
 
             <tr>
-              <td>✅ Четверг</td>
+              <td>Четверг</td>
               <td>Отряд Марийки</td>
               <td>Честность</td>
             </tr>
