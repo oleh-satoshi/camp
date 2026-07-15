@@ -1,245 +1,196 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Лагерь — Расписание</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Расписание лагеря</title>
 
   <style>
-    :root {
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      --bg: #f4f5f7;
-      --card-bg: #ffffff;
-      --text: #1c1c1e;
-      --muted: #73737a;
-      --border: #e2e3e7;
-      --radius: 20px;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
-      --blue: #007aff;
-      --blue-dark: #006ee6;
-      --warning-bg: #fff7d6;
-      --warning-text: #7a5a00;
-    }
+    * { box-sizing: border-box; }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
     body {
-      min-height: 100%;
       margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f5f5f7;
+      color: #1c1c1e;
     }
 
-    body {
-      font-family: var(--font);
-      background-color: var(--bg);
-      color: var(--text);
-      font-size: 15px;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .schedule {
-      width: 100%;
+    .page {
       max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 24px 40px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
     }
 
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
+      text-align: center;
+      margin-bottom: 18px;
     }
 
-    .action-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 12px 22px;
-      border: none;
+    .print-button {
+      border: 0;
       border-radius: 14px;
-      background-color: var(--blue);
-      color: #ffffff;
+      background: #007aff;
+      color: #fff;
+      padding: 13px 22px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0, 122, 255, 0.22);
-      transition: transform 0.2s ease, background-color 0.2s ease;
+      box-shadow: 0 8px 18px rgba(0, 122, 255, .22);
     }
 
-    .action-button:hover {
-      background-color: var(--blue-dark);
-      transform: translateY(-1px);
-    }
-
-    .action-button:active {
-      transform: translateY(0);
-    }
-
-    .telegram-note {
-      margin: 0 auto 20px;
-      max-width: 760px;
-      padding: 14px 18px;
-      border: 1px solid #f0d98a;
-      border-radius: 14px;
-      background: var(--warning-bg);
-      color: var(--warning-text);
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    .schedule-content {
-      width: 100%;
-      padding: 32px;
-      background-color: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .07);
     }
 
     h1 {
-      margin: 0 0 28px;
       text-align: center;
+      margin: 0 0 24px;
       font-size: 28px;
-      line-height: 1.2;
-      font-weight: 750;
     }
 
     h2 {
-      margin: 32px 0 16px;
+      margin: 28px 0 14px;
+      font-size: 21px;
+      border-bottom: 1px solid #e5e5ea;
       padding-bottom: 7px;
-      border-bottom: 1px solid var(--border);
-      font-size: 22px;
-      line-height: 1.25;
-      font-weight: 700;
     }
 
     .entry {
       display: flex;
+      gap: 18px;
       align-items: center;
-      gap: 20px;
-      min-height: 52px;
-      margin-bottom: 10px;
-      padding: 14px 20px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background-color: var(--card-bg);
-      font-weight: 500;
-    }
-
-    .entry.after-electives {
-      margin-top: 32px;
+      border: 1px solid #e5e5ea;
+      border-radius: 16px;
+      padding: 13px 18px;
+      margin-bottom: 9px;
     }
 
     .time {
-      width: 90px;
+      width: 95px;
       flex-shrink: 0;
-      color: var(--muted);
+      color: #7b7b83;
       font-size: 13px;
       font-weight: 600;
     }
 
-    .table-wrapper {
-      width: 100%;
+    .table-wrap {
       overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border: 1px solid #e5e5ea;
+      border-radius: 16px;
     }
 
     table {
       width: 100%;
       min-width: 700px;
-      border-collapse: separate;
-      border-spacing: 0;
+      border-collapse: collapse;
     }
 
     th,
     td {
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
+      padding: 13px 16px;
+      border-bottom: 1px solid #e5e5ea;
       text-align: center;
       white-space: nowrap;
     }
 
     th {
-      background-color: var(--bg);
-      color: var(--muted);
+      background: #f5f5f7;
+      color: #77777f;
       font-size: 14px;
-      font-weight: 700;
     }
 
-    td {
-      font-weight: 500;
-    }
-
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    th:first-child,
-    td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 1;
-      width: 110px;
-      background-color: var(--card-bg);
-      color: var(--muted);
-      font-weight: 700;
-      text-align: left;
-    }
-
-    thead th:first-child {
-      z-index: 2;
-      background-color: var(--bg);
+    tr:last-child td {
+      border-bottom: 0;
     }
 
     .badge {
       display: inline-block;
-      min-width: 92px;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 14px;
+      padding: 9px 12px;
+      border-radius: 12px;
       font-weight: 600;
-      text-align: center;
-      white-space: nowrap;
     }
 
-    .sport {
-      background-color: #dcfce7;
-      color: #065f46;
+    .sport { background: #dcfce7; color: #065f46; }
+    .craft { background: #f3e8ff; color: #7c3aed; }
+    .trampoline { background: #dbeafe; color: #1d4ed8; }
+    .quest { background: #fef9c3; color: #a44b08; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, .45);
+      z-index: 9999;
     }
 
-    .craft {
-      background-color: #f3e8ff;
-      color: #7c3aed;
+    .modal-backdrop.show {
+      display: flex;
     }
 
-    .trampoline {
-      background-color: #dbeafe;
-      color: #1d4ed8;
+    .modal {
+      width: min(460px, 100%);
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
     }
 
-    .quest {
-      background-color: #fef9c3;
-      color: #a44b08;
+    .modal h3 {
+      margin: 0 0 12px;
+      font-size: 21px;
+    }
+
+    .modal p {
+      margin: 0 0 12px;
+      line-height: 1.5;
+      color: #48484a;
+    }
+
+    .modal ol {
+      margin: 0 0 20px;
+      padding-left: 22px;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .modal-button {
+      flex: 1 1 180px;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .modal-button.primary {
+      background: #007aff;
+      color: #fff;
+    }
+
+    .modal-button.secondary {
+      background: #ececf1;
+      color: #1c1c1e;
     }
 
     @media (max-width: 700px) {
-      .schedule {
+      .page {
         margin: 20px auto;
         padding: 0 12px 30px;
       }
 
-      .schedule-content {
+      .content {
         padding: 20px 14px;
       }
 
@@ -267,68 +218,46 @@
     }
 
     @media print {
-      html,
       body {
-        width: 210mm;
-        margin: 0;
-        padding: 0;
-        background: #ffffff;
-      }
-
-      body {
-        color: #000000;
-        font-size: 8.5pt;
+        background: #fff;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
       .toolbar,
-      .telegram-note {
+      .modal-backdrop {
         display: none !important;
       }
 
-      .schedule {
+      .page {
         width: 100%;
         max-width: none;
         margin: 0;
         padding: 0;
       }
 
-      .schedule-content {
-        width: 100%;
-        margin: 0;
-        padding: 2mm 3mm;
-        border-radius: 0;
+      .content {
         box-shadow: none;
+        border-radius: 0;
+        padding: 2mm 3mm;
       }
 
       h1 {
-        margin: 0 0 2.5mm;
         font-size: 15pt;
-        line-height: 1.1;
+        margin-bottom: 2.5mm;
       }
 
       h2 {
-        margin: 2.5mm 0 1.5mm;
-        padding-bottom: 0.8mm;
         font-size: 10.5pt;
-        line-height: 1.1;
+        margin: 2.5mm 0 1.5mm;
       }
 
       .entry {
-        min-height: 0;
         margin-bottom: 1mm;
-        padding: 1.2mm 2.2mm;
-        gap: 2.5mm;
+        padding: 1.2mm 2mm;
         border-radius: 3mm;
         font-size: 8pt;
-        line-height: 1.1;
         break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .entry.after-electives {
-        margin-top: 2.5mm;
       }
 
       .time {
@@ -336,73 +265,42 @@
         font-size: 7.5pt;
       }
 
-      .table-wrapper {
+      .table-wrap {
         overflow: visible;
-        border-radius: 2.5mm;
+        border-radius: 2mm;
         break-inside: avoid;
-        page-break-inside: avoid;
       }
 
       table {
-        width: 100%;
         min-width: 0;
         table-layout: fixed;
-        border-collapse: collapse;
       }
 
       th,
       td {
-        padding: 1.15mm 0.8mm;
-        border: 0.2mm solid #dddddd;
+        padding: 1.1mm .7mm;
         font-size: 7pt;
-        line-height: 1.05;
         white-space: normal;
-        overflow-wrap: break-word;
-      }
-
-      th {
-        font-size: 6.8pt;
-      }
-
-      th:first-child,
-      td:first-child {
-        position: static;
-        width: 24mm;
-        background-color: #ffffff;
-        text-align: center;
-      }
-
-      thead th:first-child {
-        background-color: #f4f5f7;
       }
 
       .badge {
-        min-width: 0;
         width: 100%;
-        padding: 1.1mm 0.5mm;
-        border-radius: 2.5mm;
+        padding: 1mm .5mm;
         font-size: 7pt;
-        line-height: 1.05;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="schedule">
+  <main class="page">
     <div class="toolbar">
-      <button class="action-button" id="printButton" type="button">
+      <button class="print-button" id="printButton" type="button">
         🖨️ Распечатать A4
       </button>
     </div>
 
-    <div class="telegram-note" id="telegramNote">
-      Если страница открыта внутри Telegram, кнопка печати может не сработать.
-      Нажмите меню Telegram и выберите «Открыть в Safari» или «Открыть в Chrome»,
-      затем снова нажмите «Распечатать A4».
-    </div>
-
-    <div class="schedule-content">
+    <section class="content">
       <h1>📅 Расписание лагеря</h1>
 
       <div class="entry"><div class="time">8:00–9:00</div><div>🧠 Планерка, молитва</div></div>
@@ -412,7 +310,7 @@
 
       <h2>Факультативы</h2>
 
-      <div class="table-wrapper">
+      <div class="table-wrap">
         <table>
           <thead>
             <tr>
@@ -456,7 +354,7 @@
         </table>
       </div>
 
-      <div class="entry after-electives"><div class="time">12:30–13:30</div><div>🍽️ Обед</div></div>
+      <div class="entry" style="margin-top:28px"><div class="time">12:30–13:30</div><div>🍽️ Обед</div></div>
       <div class="entry"><div class="time">13:30–14:30</div><div>📖 Библейский час</div></div>
       <div class="entry"><div class="time">14:30–15:00</div><div>🎶 Музыкальный час</div></div>
       <div class="entry"><div class="time">15:00–16:00</div><div>🎮 Общелагерная игра</div></div>
@@ -465,7 +363,7 @@
 
       <h2>График сценок во время служения</h2>
 
-      <div class="table-wrapper">
+      <div class="table-wrap">
         <table>
           <thead>
             <tr>
@@ -482,36 +380,101 @@
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   </main>
 
-  <script>
-    (function () {
-      const printButton = document.getElementById("printButton");
+  <div class="modal-backdrop" id="telegramModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h3 id="modalTitle">Печать внутри Telegram ограничена</h3>
 
-      function isTelegramBrowser() {
-        const ua = navigator.userAgent || "";
-        return /Telegram/i.test(ua);
+      <p>
+        Сам Telegram ограничивает возможность открыть системное меню печати
+        внутри встроенного браузера.
+      </p>
+
+      <p>Чтобы распечатать расписание:</p>
+
+      <ol>
+        <li>Нажмите меню <strong>⋯</strong> в правом верхнем углу.</li>
+        <li>Выберите <strong>«Открыть в Safari»</strong> или <strong>«Открыть в Chrome»</strong>.</li>
+        <li>Снова нажмите <strong>«Распечатать A4»</strong>.</li>
+      </ol>
+
+      <div class="modal-actions">
+        <button class="modal-button primary" id="tryAgainButton" type="button">
+          Попробовать ещё раз
+        </button>
+
+        <button class="modal-button secondary" id="closeModalButton" type="button">
+          Понятно
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const printButton = document.getElementById("printButton");
+    const telegramModal = document.getElementById("telegramModal");
+    const tryAgainButton = document.getElementById("tryAgainButton");
+    const closeModalButton = document.getElementById("closeModalButton");
+
+    let printEventDetected = false;
+    let fallbackTimer = null;
+
+    function showTelegramHelp() {
+      telegramModal.classList.add("show");
+    }
+
+    function hideTelegramHelp() {
+      telegramModal.classList.remove("show");
+    }
+
+    function attemptPrint() {
+      printEventDetected = false;
+
+      if (fallbackTimer) {
+        clearTimeout(fallbackTimer);
       }
 
-      printButton.addEventListener("click", function () {
-        if (isTelegramBrowser()) {
-          alert(
-            "Telegram может блокировать печать. Откройте меню страницы и выберите «Открыть в Safari» или «Открыть в Chrome», затем нажмите кнопку печати ещё раз."
-          );
-          return;
-        }
+      try {
+        window.focus();
+        window.print();
 
-        try {
-          window.focus();
-          window.print();
-        } catch (error) {
-          alert(
-            "Не удалось открыть меню печати. Используйте Command + P на Mac или Ctrl + P на Windows."
-          );
-        }
-      });
-    })();
+        fallbackTimer = setTimeout(function () {
+          if (!printEventDetected) {
+            showTelegramHelp();
+          }
+        }, 1200);
+      } catch (error) {
+        showTelegramHelp();
+      }
+    }
+
+    window.addEventListener("beforeprint", function () {
+      printEventDetected = true;
+
+      if (fallbackTimer) {
+        clearTimeout(fallbackTimer);
+      }
+    });
+
+    window.addEventListener("afterprint", function () {
+      printEventDetected = false;
+    });
+
+    printButton.addEventListener("click", attemptPrint);
+    tryAgainButton.addEventListener("click", function () {
+      hideTelegramHelp();
+      attemptPrint();
+    });
+
+    closeModalButton.addEventListener("click", hideTelegramHelp);
+
+    telegramModal.addEventListener("click", function (event) {
+      if (event.target === telegramModal) {
+        hideTelegramHelp();
+      }
+    });
   </script>
 </body>
 </html>
